@@ -4,15 +4,19 @@ const Button = styled.button({
     // en utilisant une fonction tu vas pouvoir définir des styles conditionnellement
     // ici avec un block
     backgroundColor: (props) => {
-        if (props.variant === 'primary') return '#646cff';
-        else if (props.variant === 'secondary') return '#16a34a';
-        else return '#171717';
+        if (props.variant === 'primary') {
+            return '#646cff';
+        } else if (props.variant === 'secondary') {
+            return '#16a34a';
+        } else {
+            return '#171717';
+        }
     },
-    color: 'white',
+    color:           'white',
     // ici, j'utilise un ternaire pour définir la largeur du bouton en fonction
     // de la props "size"
-    padding: (props) => (props.size === 'sm' ? '8px 12px' : '16px 20px'),
-    border: 'none',
+    padding:      (props) => (props.size === 'small' ? '8px 12px' : '16px 20px'),
+    border:       'none',
     borderRadius: (props) => (props.square ? '0' : '8px'),
 });
 
