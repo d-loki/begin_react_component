@@ -1,32 +1,31 @@
-import styled from 'styled-components';
+import clsx from 'clsx';
 
-const Button = styled.button({
-    // en utilisant une fonction tu vas pouvoir définir des styles conditionnellement
-    // ici avec un block
-    backgroundColor: (props) => {
-        if (props.variant === 'primary') return '#646cff';
-        else if (props.variant === 'secondary') return '#16a34a';
-        else return '#171717';
-    },
-    color: 'white',
-    // ici, j'utilise un ternaire pour définir la largeur du bouton en fonction
-    // de la props "size"
-    padding: (props) => (props.size === 'sm' ? '8px 12px' : '16px 20px'),
-    border: 'none',
-    borderRadius: (props) => (props.square ? '0' : '8px'),
-});
+const VariantsStyle = {
+    primary:   'bg-[#646cff]',
+    secondary: 'bg-[#16a34a]',
+    default:   'bg-[#171717]',
+};
 
-const Container = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '8px'
-});
+const SizesVariant = {
+    small: 'p-2 text-sm',
+    large: 'p-3 text-lg',
+};
 
+const Button = ({
+    variant,
+    size,
+    children,
+    rounded = true,
+}) => {
+    const variantStyle = VariantsStyle[variant];
+    const sizeStyle = SizesVariant[size];
+
+    return <button className={clsx('border-0', rounded && 'rounded-md', variantStyle, sizeStyle)}>{children}</button>;
+};
 
 const Demo = () => {
     return (
-        <Container>
+        <div className="flex flex-col items-center gap-4">
             <Button variant="primary" size="small">
                 Primary small
             </Button>
@@ -42,13 +41,13 @@ const Demo = () => {
             <Button variant="secondary" size="large">
                 Secondary large
             </Button>
-            <Button variant="secondary" size="large" square>
+            <Button variant="secondary" size="large" rounded={false}>
                 Square Secondary large
             </Button>
             <Button variant="default" size="large">
                 Default large
             </Button>
-        </Container>
+        </div>
     );
 };
 

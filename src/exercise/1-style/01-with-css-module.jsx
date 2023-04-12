@@ -1,32 +1,44 @@
-import styled from 'styled-components';
+import styles from "./01.module.css";
 
-const Button = styled.button({
-    // en utilisant une fonction tu vas pouvoir définir des styles conditionnellement
-    // ici avec un block
-    backgroundColor: (props) => {
-        if (props.variant === 'primary') return '#646cff';
-        else if (props.variant === 'secondary') return '#16a34a';
-        else return '#171717';
+const VariantsStyle = {
+    primary:   {
+        ['--background-color']: '#646cff',
     },
-    color: 'white',
-    // ici, j'utilise un ternaire pour définir la largeur du bouton en fonction
-    // de la props "size"
-    padding: (props) => (props.size === 'sm' ? '8px 12px' : '16px 20px'),
-    border: 'none',
-    borderRadius: (props) => (props.square ? '0' : '8px'),
-});
+    secondary: {
+        ['--background-color']: '#16a34a',
+    },
+    default:   {
+        ['--background-color']: '#171717',
+    },
+};
 
-const Container = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '8px'
-});
+const SizesVariant = {
+    small: {
+        ['--padding']:   '8px 16px',
+        ['--font-size']: '1rem',
+    },
+    large: {
+        ['--padding']:   '12px 24px',
+        ['--font-size']: '1.2rem',
+    },
+};
 
+const Button = ({
+    variant,
+    size,
+    children,
+}) => {
+    const variantStyle = VariantsStyle[variant];
+    const sizeStyle = SizesVariant[size];
+    return <button
+        className={styles.button}
+        style={{ ...variantStyle, ...sizeStyle }}
+    >{children}</button>;
+};
 
 const Demo = () => {
     return (
-        <Container>
+        <div className={styles.container}>
             <Button variant="primary" size="small">
                 Primary small
             </Button>
@@ -42,13 +54,10 @@ const Demo = () => {
             <Button variant="secondary" size="large">
                 Secondary large
             </Button>
-            <Button variant="secondary" size="large" square>
-                Square Secondary large
-            </Button>
             <Button variant="default" size="large">
                 Default large
             </Button>
-        </Container>
+        </div>
     );
 };
 
